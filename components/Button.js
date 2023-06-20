@@ -7,6 +7,7 @@ export const ButtonStyle = css`
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  text-decoration: none;
   svg {
     height: 16px;
     margin-right: 5px;
