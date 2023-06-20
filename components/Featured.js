@@ -11,6 +11,7 @@ const Bg = styled.div`
 const Title = styled.h1`
   margin:0;
   font-weight: normal;
+  font-size: 3rem;
 `;
 
 const Desc = styled.p`
@@ -30,11 +31,13 @@ const ColumnsWrapper = styled.div`
 const ButtonsWrapper = styled.div`
   display: flex;
   gap: 10px;
+  margin-top: 25px;
 `;
 
 const Column = styled.div`
   display: flex;
   align-items: center;
+  
 `;
 
 
