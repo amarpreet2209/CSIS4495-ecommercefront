@@ -6,6 +6,7 @@ const GlobalStyles = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
   
   body {
+    background-color: #eee;
     padding: 0;
     margin: 0;
     font-family: 'Roboto', sans-serif;
