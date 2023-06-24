@@ -9,11 +9,11 @@ export const ButtonStyle = css`
   display: inline-flex;
   align-items: center;
   text-decoration: none;
+  font-weight: 500;
   svg {
     height: 16px;
     margin-right: 5px;
   }
-
 
   ${props => props.white && !props.outline && css`
     background-color: #fff;
