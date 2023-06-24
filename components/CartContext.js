@@ -29,6 +29,7 @@ export function CartContextProvider({children}) {
             if (pos !== -1) {
                 return prev.filter((value, index) => index !== pos);
             }
+            return prev;
         });
     }
     
