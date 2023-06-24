@@ -66,6 +66,8 @@ export default function CartPage() {
                 .then(response => {
                     setProducts(response.data)
                 });
+        } else {
+            setProducts([]);
         }
     },[cartProducts])
     
