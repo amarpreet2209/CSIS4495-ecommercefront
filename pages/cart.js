@@ -45,7 +45,10 @@ export default function CartPage() {
                                 <h2>Cart</h2>
                                 
                                 {products.map(product =>(
-                                    <div>{product.title}</div>
+                                    <div>{product.title} : {cartProducts
+                                        .filter(id =>  id=== product._id)
+                                        .length
+                                    }</div>
                                 ))}
                             </>
                         )}
