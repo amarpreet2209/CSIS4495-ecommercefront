@@ -2,6 +2,8 @@ import Header from "../components/Header";
 import styled from "styled-components";
 import Center from "../components/Center";
 import Button from "../components/Button";
+import {useContext} from "react";
+import {CartContext} from "../components/CartContext";
 
 const ColumnsWrapper = styled.div`
   display: grid;
@@ -17,16 +19,25 @@ const Box = styled.div`
 `;
 
 export default function CartPage() {
+    const {cartProducts} = useContext(CartContext);
     return (
         <>
             <Header></Header>
             <Center>
                 <ColumnsWrapper>
-                    <Box>1</Box>
                     <Box>
-                        <h2>Order Information</h2>
-                        <Button black block>Continue to payment</Button>
+                        {!cartProducts?.length && (
+                            <div>Your cart is empty!</div>
+                        )}
                     </Box>
+                    {!!cartProducts?.length && (
+                        <Box>
+                            <h2>Order Information</h2>
+                            <input type={"text"} placeholder={"Address"}/>
+                            <input type={"text"} placeholder={"Address 2"}/>
+                            <Button black block>Continue to payment</Button>
+                        </Box>
+                    )}
                 </ColumnsWrapper>
             </Center>
         </>
