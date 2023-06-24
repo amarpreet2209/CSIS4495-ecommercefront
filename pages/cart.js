@@ -6,6 +6,7 @@ import {useContext, useEffect, useState} from "react";
 import {CartContext} from "../components/CartContext";
 import axios from "axios";
 import Table from "../components/Table";
+import Input from "../components/Input";
 
 const ColumnsWrapper = styled.div`
   display: grid;
@@ -41,6 +42,11 @@ const ProductImageBox = styled.div`
 
 const QuantityLabel = styled.span`
   padding: 0 3px;
+`;
+
+const CityHolder = styled.div`
+    display: flex;
+    gap: 5px;
 `;
 
 export default function CartPage() {
@@ -131,8 +137,15 @@ export default function CartPage() {
                     {!!cartProducts?.length && (
                         <Box>
                             <h2>Order Information</h2>
-                            <input type={"text"} placeholder={"Address"}/>
-                            <input type={"text"} placeholder={"Address 2"}/>
+                            <Input type={"text"} placeholder="Name"/>
+                            <Input type={"text"} placeholder="Email"/>
+                            
+                            <CityHolder>
+                                <Input type={"text"} placeholder="City"/>
+                                <Input type={"text"} placeholder="Postal Code"/>
+                            </CityHolder>
+                            <Input type={"text"} placeholder="Street Address"/>
+                            <Input type={"text"} placeholder="Country"/>
                             <Button black block>Continue to payment</Button>
                         </Box>
                     )}
