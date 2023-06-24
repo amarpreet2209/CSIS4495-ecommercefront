@@ -16,6 +16,10 @@ export default function Home({featuredProduct, newProducts}) {
   )
 }
 
+/*
+* Special Function
+* fetching data on the server side before rendering page.
+* */
 export async function getServerSideProps() {
     const featuredProductId = '6483b0b5e8298969cd29ba55';
     await mongooseConnect();
