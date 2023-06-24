@@ -85,6 +85,17 @@ export default function CartPage() {
         total += price;
     }
     
+    async function goToPayment() {
+        const response = await axios.post('/api/checkout', {
+            name, email, city, postalCode, streetAddress, country, cartProducts
+        });
+        
+        // redirect to stripe url
+        if (response.data.url) {
+            window.location = response.data.url;
+        }
+    }
+    
     return (
         <>
             <Header></Header>
@@ -146,7 +157,6 @@ export default function CartPage() {
                     {!!cartProducts?.length && (
                         <Box>
                             <h2>Order Information</h2>
-                            <form method="post" action="/api/checkout">
                                 <Input
                                     type="text"
                                     placeholder="Name"
@@ -197,8 +207,7 @@ export default function CartPage() {
                                     type="hidden"
                                     name="products"
                                     value={cartProducts.join(',')} />
-                                <Button black block type={"submit"}>Continue to payment</Button>
-                            </form>
+                                <Button black block onClick={goToPayment}>Continue to payment</Button>
                         </Box>
                     )}
                 </ColumnsWrapper>
