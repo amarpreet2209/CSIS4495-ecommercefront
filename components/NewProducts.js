@@ -9,10 +9,6 @@ const ProductsGrid = styled.div`
   padding-top: 20px;
 `;
 
-const Title = styled.h2`
-  
-`;
-
 export default function NewProducts({products}) {
     return (
         <Center>
