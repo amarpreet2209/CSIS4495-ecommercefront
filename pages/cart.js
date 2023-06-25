@@ -89,14 +89,20 @@ export default function CartPage() {
         const response = await axios.post('/api/checkout', {
             name, email, city, postalCode, streetAddress, country, cartProducts
         });
-        
         // redirect to stripe url
         if (response.data.url) {
-            window.location = response.data.url;
+                window.location = response.data.url;
         }
     }
     
-    if (window.location.href.includes('success')) {
+    const [orderSuccess, setOrderSuccess] = useState(false);
+    
+    useEffect(() => {
+        if (window?.location?.href?.includes("success")) {
+            setOrderSuccess(true);
+        }
+    }, []);
+    if (orderSuccess) {
         return (
             <>
                 <Header/>
@@ -113,6 +119,7 @@ export default function CartPage() {
             </>
         )
     }
+    
     
     return (
         <>
