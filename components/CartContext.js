@@ -33,8 +33,13 @@ export function CartContextProvider({children}) {
         });
     }
     
+    function clearCart() {
+        setCartProducts([]); // Clear cartProducts state
+        ls?.removeItem("cart"); // Remove "cart" item from localStorage
+    }
+    
     return (
-        <CartContext.Provider value={{cartProducts, setCartProducts, addProduct, removeProduct}}>
+        <CartContext.Provider value={{cartProducts, setCartProducts, addProduct, removeProduct, clearCart}}>
             {children}
         </CartContext.Provider>
     )

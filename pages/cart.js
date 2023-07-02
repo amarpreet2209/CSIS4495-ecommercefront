@@ -50,7 +50,7 @@ const CityHolder = styled.div`
 `;
 
 export default function CartPage() {
-    const {cartProducts, addProduct, removeProduct} = useContext(CartContext);
+    const {cartProducts, addProduct, removeProduct, clearCart} = useContext(CartContext);
     const [products, setProducts] = useState([]);
     
     const [name, setName] = useState("");
@@ -59,6 +59,9 @@ export default function CartPage() {
     const [postalCode, setPostalCode] = useState("");
     const [streetAddress, setStreetAddress] = useState("");
     const [country, setCountry] = useState("");
+    const [orderSuccess, setOrderSuccess] = useState(false);
+    
+    
     
     useEffect(() => {
         if (cartProducts.length > 0) {
@@ -69,7 +72,9 @@ export default function CartPage() {
         } else {
             setProducts([])
         }
-    },[cartProducts])
+    },[cartProducts]);
+    
+    
     
     function moreOfThisProduct(id) {
         addProduct(id);
@@ -95,13 +100,14 @@ export default function CartPage() {
         }
     }
     
-    const [orderSuccess, setOrderSuccess] = useState(false);
     
     useEffect(() => {
         if (window?.location?.href?.includes("success")) {
+            clearCart(); // Clear the cart when the payment is successful
             setOrderSuccess(true);
         }
     }, []);
+    
     if (orderSuccess) {
         return (
             <>
@@ -120,6 +126,8 @@ export default function CartPage() {
         )
     }
     
+    
+   
     
     return (
         <>
