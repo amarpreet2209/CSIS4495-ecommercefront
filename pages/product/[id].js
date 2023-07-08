@@ -6,6 +6,8 @@ import {Product} from "../../models/Product";
 import styled from "styled-components";
 import WhiteBox from "../../components/WhiteBox";
 import ProductImages from "../../components/ProductImages";
+import Button from "../../components/Button";
+import CartIcon from "../../components/icons/Cart";
 
 const ColWrapper = styled.div`
     display: grid;
@@ -14,6 +16,15 @@ const ColWrapper = styled.div`
     margin-top: 40px;
 `;
 
+const PriceRow = styled.div`
+    display: flex;
+    gap: 20px;
+    align-items: center;
+`;
+
+const Price = styled.span`
+    font-size: 1.4rem;
+`;
 
 export default function ProductPage({product}) {
     return (
@@ -27,6 +38,16 @@ export default function ProductPage({product}) {
                     <div>
                         <Title>{product.title}</Title>
                         <p>{product.description}</p>
+                        <PriceRow>
+                            <div>
+                                <Price>${product.price}</Price>
+                            </div>
+                            <div>
+                                <Button primary>
+                                    <CartIcon/>Add to cart
+                                </Button>
+                            </div>
+                        </PriceRow>
                     </div>
                     
                 </ColWrapper>

@@ -20,6 +20,7 @@ const ImageButton = styled.div`
         border-color: #ccc;
       ` : `
         border-color: transparent;
+        opacity: 0.7;
       `}
   
       height:  40px;
