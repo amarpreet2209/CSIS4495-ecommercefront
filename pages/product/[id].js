@@ -5,6 +5,7 @@ import {mongooseConnect} from "../../lib/mongoose";
 import {Product} from "../../models/Product";
 import styled from "styled-components";
 import WhiteBox from "../../components/WhiteBox";
+import ProductImages from "../../components/ProductImages";
 
 const ColWrapper = styled.div`
     display: grid;
@@ -21,7 +22,7 @@ export default function ProductPage({product}) {
             <Center>
                 <ColWrapper>
                     <WhiteBox>
-                        <img style={{maxWidth: '100%'}} src={product.images?.[0]} alt={""}/>
+                        <ProductImages images={product.images}/>
                     </WhiteBox>
                     <div>
                         <Title>{product.title}</Title>
