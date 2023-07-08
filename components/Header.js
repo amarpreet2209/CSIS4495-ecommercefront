@@ -12,6 +12,8 @@ const StyledHeader = styled.header`
 const Logo = styled(Link)`
     color: #fff;
     text-decoration: none;
+    position: relative;
+    z-index: 3;
 `;
 
 const Wrapper = styled.div`
@@ -28,11 +30,11 @@ const StyledNav = styled.nav`
   `}
   gap: 15px;
   position: fixed;
-  top: 50px;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 20px;
+  padding: 70px 20px 20px;
   background-color: #222;
   @media screen and (min-width: 768px) {
     display: flex;
@@ -46,6 +48,10 @@ const NavLink = styled(Link)`
   display: block;
   color: #aaa;
   text-decoration: none;
+  padding: 10px 0;
+  @media screen and (min-width: 768px) {
+    padding: 0;
+  }
 `;
 
 const NavButton = styled.button`
@@ -55,7 +61,8 @@ const NavButton = styled.button`
   border: 0;
   color: white;
   cursor: pointer;
-
+  position: relative;
+  z-index: 3;
   @media screen and (min-width: 768px) {
     display: none;
   }
