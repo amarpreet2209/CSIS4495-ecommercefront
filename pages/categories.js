@@ -1,11 +1,29 @@
 import Title from "../components/Title";
 import Header from "../components/Header";
+import Center from "../components/Center";
+import {Category} from "../models/Category";
 
-export default function CategoriesPage() {
+export default function CategoriesPage({categories}) {
     return (
         <>
             <Header/>
-            <Title>All Categories</Title>
+            <Center>
+                {categories.map(category => (
+                    <div>
+                        <h2>{category.name}</h2>
+                    </div>
+                ))}
+            </Center>
         </>
     )
+}
+
+export async function getServerSideProps() {
+    const categories = await Category.find();
+    
+    return {
+        props: {
+            categories: JSON.parse(JSON.stringify(categories))
+        }
+    }
 }
