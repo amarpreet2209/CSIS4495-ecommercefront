@@ -18,12 +18,17 @@ const CategoryGrid = styled.div`
 
 const CategoryTitle = styled.div`
   margin-top: 40px;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   display: flex;
   align-items: center;
   gap: 15px;
   a {
     color: #555;
+    display: inline-block;
+  }
+  h2 {
+    margin-bottom: 10px;
+    margin-top: 10px;
   }
 `;
 
@@ -31,6 +36,16 @@ const CategoryWrapper = styled.div`
   margin-bottom: 40px;
 `;
 
+const ShowAllSquare = styled(Link)`
+  background-color: #ddd;
+  height: 160px;
+  border-radius: 10px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  color: #555;
+  text-decoration: none;
+`;
 export default function CategoriesPage({mainCategories,categoriesProducts}) {
     return (
         <>
@@ -51,6 +66,7 @@ export default function CategoriesPage({mainCategories,categoriesProducts}) {
                             {categoriesProducts[category._id].map(product => (
                                 <ProductBox {...product} />
                             ))}
+                            <ShowAllSquare href={'/category/' + category._id}>Show All &rarr;</ShowAllSquare>
                         </CategoryGrid>
                     </CategoryWrapper>
                 ))}
