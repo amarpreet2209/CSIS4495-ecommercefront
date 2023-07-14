@@ -11,6 +11,17 @@ export default function CategoryPage({category, products}) {
             <Header/>
             <Center>
                 <Title>{category.name}</Title>
+                {category.properties.map(prop => (
+                    <div>
+                        {prop.name}
+                        <select>
+                            {prop.values.map(val => (
+                                <option value={val}>{val}</option>
+                            ))}
+                        </select>
+                    </div>
+                ))}
+                
                 <ProductsGrid products={products}/>
             </Center>
         </>
