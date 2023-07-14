@@ -29,8 +29,19 @@ export async function getServerSideProps() {
     const categoriesProducts = {}
     
     for (const mainCategory of mainCategories) {
-        categoriesProducts[mainCategory._id] = await Product.find({category: mainCategory._id}, null,
+        
+        const mainCategoryId = mainCategory._id.toString();
+        
+        const childCategoryId = categories
+            .filter(category => category?.parent?.toString() === mainCategoryId)
+            .map(category =>   category._id)
+        
+        const categoriesIds = [mainCategoryId, ...childCategoryId];
+        
+        const products = await Product.find({category: categoriesIds}, null,
             {limit: 3, sort: {_id: -1}});
+        
+        categoriesProducts[mainCategory._id] = products;
     }
     
     return {
