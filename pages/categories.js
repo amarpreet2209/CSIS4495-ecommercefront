@@ -58,7 +58,7 @@ export default function CategoriesPage({mainCategories,categoriesProducts}) {
                                 {category.name}
                             </h2>
                             <div>
-                                <Link href={'/category/' + category._id}>Show All {category.name}</Link>
+                                <Link href={'/category/' + category._id}>Show All</Link>
                             </div>
                         </CategoryTitle>
                         
