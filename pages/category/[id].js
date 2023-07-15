@@ -62,6 +62,7 @@ export default function CategoryPage({category,subCategories, products: original
         const catIds = [category._id, ...(subCategories?.map(c => c._id) || [])];
         const params = new URLSearchParams;
         params.set('categories', catIds.join(','))
+        params.set('sort', sort)
         
         filterValues.forEach(f => {
             if (f.value !== 'all') {
@@ -77,7 +78,9 @@ export default function CategoryPage({category,subCategories, products: original
                 setProducts(res.data);
             })
         
-    }, [filterValues]);
+    }, [filterValues, sort]);
+    
+    
     
     return (
         <>
