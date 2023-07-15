@@ -6,6 +6,7 @@ import CartIcon from "./icons/Cart";
 import {useContext} from "react";
 import {CartContext} from "./CartContext";
 import FlyingButton from "./FlyingButton";
+import {RevealWrapper} from "next-reveal";
 
 const Bg = styled.div`
   background-color: #222;
@@ -67,7 +68,6 @@ const Column = styled.div`
 
 
 export default function Featured({product}) {
-    const {addProduct} = useContext(CartContext);
 
     return (
         <Bg>
@@ -75,19 +75,25 @@ export default function Featured({product}) {
                 <ColumnsWrapper>
                     <Column>
                         <div>
-                            <Title>{product.title}</Title>
-                            <Desc>{product.description}</Desc>
-                            <ButtonsWrapper>
-                                <ButtonLink href={'/product/' + product._id} outline={1} white={1}>Read more</ButtonLink>
-                                <FlyingButton white _id={product._id} src={product.images?.[0]}>
-                                    <CartIcon/>
-                                    Add to cart
-                                </FlyingButton>
-                            </ButtonsWrapper>
+                            
+                            <RevealWrapper>
+                                <Title>{product.title}</Title>
+                                <Desc>{product.description}</Desc>
+                                <ButtonsWrapper>
+                                    <ButtonLink href={'/product/' + product._id} outline={1} white={1}>Read more</ButtonLink>
+                                    <FlyingButton white _id={product._id} src={product.images?.[0]}>
+                                        <CartIcon/>
+                                        Add to cart
+                                    </FlyingButton>
+                                </ButtonsWrapper>
+                            </RevealWrapper>
                         </div>
                     </Column>
                     <Column>
-                        <img src='https://149426355.v2.pressablecdn.com/wp-content/uploads/2021/10/mbp-2021-bbedit-lede.png'  alt=""/>
+                        <RevealWrapper>
+                            <img src='https://149426355.v2.pressablecdn.com/wp-content/uploads/2021/10/mbp-2021-bbedit-lede.png'  alt=""/>
+                        </RevealWrapper>
+                       
                     </Column>
                 </ColumnsWrapper>
             </Center>
