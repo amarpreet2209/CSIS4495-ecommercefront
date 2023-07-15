@@ -20,6 +20,7 @@ export default function FlyingButton(props) {
     return (
         <FlyingButtonWrapper onClick={() => addProduct(props._id)}>
             <FlyingButtonOriginal
+                {...props}
                 targetTop={'5%'}
                 targetLeft={'95%'}
                 flyingItemStyling={{
