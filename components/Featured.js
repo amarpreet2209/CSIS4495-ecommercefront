@@ -76,7 +76,7 @@ export default function Featured({product}) {
                     <Column>
                         <div>
                             
-                            <RevealWrapper>
+                            <RevealWrapper origin={'left'}>
                                 <Title>{product.title}</Title>
                                 <Desc>{product.description}</Desc>
                                 <ButtonsWrapper>
