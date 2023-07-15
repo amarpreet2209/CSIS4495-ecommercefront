@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {ButtonStyle} from "./Button";
 import {primary} from "../lib/colors";
 import FlyingButtonOriginal from "react-flying-item"
-import {useContext} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {CartContext} from "./CartContext";
 
 const FlyingButtonWrapper= styled.div`
@@ -26,26 +26,39 @@ const FlyingButtonWrapper= styled.div`
 
 export default function FlyingButton(props) {
     const {addProduct} = useContext(CartContext);
+    const [hovers, setHovers] = useState(0);
+    const wrapperRef = useRef();
+    const pixelRef = useRef();
+    const [show, setShow] = useState(false);
+    
+    useEffect(() => {})
     
     return (
-        <FlyingButtonWrapper
-            main={props.main}
-            white={props.white}
-            onClick={() => addProduct(props._id)}>
-            <FlyingButtonOriginal
-                {...props}
-                targetTop={'5%'}
-                targetLeft={'95%'}
-                flyingItemStyling={{
-                    width: 'auto',
-                    height: 'auto',
-                    maxWidth: '60px',
-                    maxHeight: '60px',
-                    borderRadius: 0
-                }}>
-                
-            </FlyingButtonOriginal>
-        </FlyingButtonWrapper>
+        <>
+            <div ref={pixelRef} style={{width:'1px', height:'1px'}}></div>
+            {show && (
+                <FlyingButtonWrapper
+                    onMouseEnter={prev => setHovers(prev+1)}
+                    main={props.main}
+                    white={props.white}
+                    onClick={() => addProduct(props._id)}>
+                    <FlyingButtonOriginal
+                        {...props}
+                        targetTop={'5%'}
+                        targetLeft={'95%'}
+                        flyingItemStyling={{
+                            width: 'auto',
+                            height: 'auto',
+                            maxWidth: '60px',
+                            maxHeight: '60px',
+                            borderRadius: 0
+                        }}>
+                    
+                    </FlyingButtonOriginal>
+                </FlyingButtonWrapper>
+            )}
+        </>
+        
     )
    
 }

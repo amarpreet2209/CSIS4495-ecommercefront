@@ -7,6 +7,7 @@ import {CartContext} from "../components/CartContext";
 import axios from "axios";
 import Table from "../components/Table";
 import Input from "../components/Input";
+import {RevealWrapper} from "next-reveal";
 
 const ColumnsWrapper = styled.div`
   display: grid;
@@ -153,21 +154,22 @@ export default function CartPage() {
             <Header></Header>
             <Center>
                 <ColumnsWrapper>
-                    <Box>
-                        {!cartProducts?.length && (
-                            <div>Your cart is empty!</div>
-                        )}
-                        <h2>Cart</h2>
-                        {products?.length > 0 && (
-                            <Table>
-                                <thead>
+                    <RevealWrapper delay={0}>
+                        <Box>
+                            <h2>Cart</h2>
+                            {!cartProducts?.length && (
+                                <div>Your cart is empty!</div>
+                            )}
+                            {products?.length > 0 && (
+                                <Table>
+                                    <thead>
                                     <tr>
                                         <th>Product</th>
                                         <th>Quantity</th>
                                         <th>Price</th>
                                     </tr>
-                                </thead>
-                                <tbody>
+                                    </thead>
+                                    <tbody>
                                     {products.map(product =>(
                                         <tr>
                                             <ProductInfoCell>
@@ -178,37 +180,40 @@ export default function CartPage() {
                                             </ProductInfoCell>
                                             <td>
                                                 <Button
-                                                     onClick={() => lessOfThisProduct(product._id)}
-                                                 >-</Button>
-
+                                                    onClick={() => lessOfThisProduct(product._id)}
+                                                >-</Button>
+                                                
                                                 <QuantityLabel>
-                                                {cartProducts
-                                                    .filter(id =>  id=== product._id)
-                                                    .length
-                                                }
+                                                    {cartProducts
+                                                        .filter(id =>  id=== product._id)
+                                                        .length
+                                                    }
                                                 </QuantityLabel>
-
+                                                
                                                 <Button
                                                     onClick={() => moreOfThisProduct(product._id)
-                                                }>+</Button>
+                                                    }>+</Button>
                                             </td>
                                             <td>${cartProducts
                                                 .filter(id =>  id=== product._id)
                                                 .length * product.price}</td>
                                         </tr>
                                     ))}
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>${total}</td>
-                                </tr>
-                                </tbody>
-                            </Table>
-                        )}
-                    </Box>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td>${total}</td>
+                                    </tr>
+                                    </tbody>
+                                </Table>
+                            )}
+                        </Box>
+                    </RevealWrapper>
+                    
                     {!!cartProducts?.length && (
-                        <Box>
-                            <h2>Order Information</h2>
+                        <RevealWrapper delay={100}>
+                            <Box>
+                                <h2>Order Information</h2>
                                 <Input
                                     type="text"
                                     placeholder="Name"
@@ -260,7 +265,9 @@ export default function CartPage() {
                                     name="products"
                                     value={cartProducts.join(',')} />
                                 <Button black block onClick={goToPayment}>Continue to payment</Button>
-                        </Box>
+                            </Box>
+                        </RevealWrapper>
+                        
                     )}
                 </ColumnsWrapper>
             </Center>

@@ -76,7 +76,7 @@ export default function Featured({product}) {
                     <Column>
                         <div>
                             
-                            <RevealWrapper origin={'left'}>
+                            <RevealWrapper origin={'left'} delay={0}>
                                 <Title>{product.title}</Title>
                                 <Desc>{product.description}</Desc>
                                 <ButtonsWrapper>
@@ -90,7 +90,7 @@ export default function Featured({product}) {
                         </div>
                     </Column>
                     <Column>
-                        <RevealWrapper>
+                        <RevealWrapper delay={0}>
                             <img src='https://149426355.v2.pressablecdn.com/wp-content/uploads/2021/10/mbp-2021-bbedit-lede.png'  alt=""/>
                         </RevealWrapper>
                        
