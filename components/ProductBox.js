@@ -58,17 +58,10 @@ const Price = styled.div`
     }
 `;
 
-const ButtonWrapper= styled.div`
-  button {
-    ${ButtonStyle};
-    background-color: transparent;
-    border: 1px solid ${primary};
-    color: ${primary};
-  }
-`;
+
 
 export default function ProductBox({_id, title, description, price, images}) {
-    const {addProduct} = useContext(CartContext);
+    
     const url = '/product/' + _id;
     return (
         <ProductWrapper>
@@ -83,22 +76,7 @@ export default function ProductBox({_id, title, description, price, images}) {
                     <Price>
                         ${price}
                     </Price>
-                    <ButtonWrapper outline onClick={() => addProduct(_id)}>
-                        <FlyingButton
-                            src={images?.[0]}
-                            targetTop={'5%'}
-                            targetLeft={'95%'}
-                            flyingItemStyling={{
-                                width: 'auto',
-                                height: 'auto',
-                                maxWidth: '60px',
-                                maxHeight: '60px',
-                                borderRadius: 0
-                            }}
-                        >
-                            Add to cart
-                        </FlyingButton>
-                    </ButtonWrapper>
+                    <FlyingButton>Add to cart</FlyingButton>
                     {/*<Button block primary outline onClick={() => addProduct(_id)}></Button>*/}
                 </PriceRow>
             </ProductInfoBox>
