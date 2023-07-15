@@ -47,12 +47,14 @@ export default function FlyingButton(props) {
     const {addProduct} = useContext(CartContext);
     const imgRef = useRef();
     function sendImageToCart(ev) {
-        imgRef.current.style.display = 'inline-block';
-        imgRef.current.style.left = (ev.clientX-50) + 'px';
-        imgRef.current.style.top = (ev.clientY-50) + 'px';
-        setTimeout(() => {
-            imgRef.current.style.display = 'none';
-        }, 1000);
+        if (imgRef.current) {
+            imgRef.current.style.display = 'inline-block';
+            imgRef.current.style.left = (ev.clientX - 50) + 'px';
+            imgRef.current.style.top = (ev.clientY - 50) + 'px';
+            setTimeout(() => {
+                imgRef.current.style.display = 'none';
+            }, 1000);
+        }
     }
     useEffect(() => {
         const interval = setInterval(() => {
