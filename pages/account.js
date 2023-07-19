@@ -8,6 +8,7 @@ import WhiteBox from "../components/WhiteBox";
 import {RevealWrapper} from "next-reveal";
 import Input from "../components/Input";
 import {useState} from "react";
+import axios from "axios";
 
 const ColsWrapper = styled.div`
     display: grid;
@@ -17,6 +18,9 @@ const ColsWrapper = styled.div`
 `;
 
 export default function AccountPage() {
+    
+    const {data: session} = useSession();
+    // console.log("data", session);
     
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -30,7 +34,6 @@ export default function AccountPage() {
         gap: 5px;
     `;
     
-    const {data: session} = useSession();
     async function logout() {
         await signOut({
             callback: process.env.NEXT_PUBLIC_URL
@@ -38,6 +41,11 @@ export default function AccountPage() {
     }
     async function login() {
         await signIn('google');
+    }
+    
+    function saveAddress() {
+        const data = {name, email, city, streetAddress, postalCode, country};
+        axios.put('/api/address', data);
     }
     return (
         <>
@@ -99,7 +107,7 @@ export default function AccountPage() {
                                 onChange={(ev) => setCountry(ev.target.value)}
                             />
                            
-                            <Button black block onClick={() => {}}>Continue to payment</Button>
+                            <Button black block onClick={saveAddress}>Save</Button>
                             <hr/>
                             {session && (
                                 <Button primary onClick={logout}>Logout</Button>
