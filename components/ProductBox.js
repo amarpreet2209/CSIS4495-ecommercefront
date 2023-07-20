@@ -7,6 +7,7 @@ import {primary} from "../lib/colors";
 import FlyingButton from "./FlyingButton";
 import HeartOutlineIcon from "./icons/HeartOutlineIcon";
 import HeartSolidIcon from "./icons/HeartSolidIcon";
+import axios from "axios";
 
 const ProductWrapper = styled.div`
   button {
@@ -86,15 +87,25 @@ const WishlistButton = styled.button`
   `}
 `;
 
-export default function ProductBox({_id, title, description, price, images}) {
+export default function ProductBox({ _id,title,description,price,images,wished=false }) {
+   /* console.log("id", _id);
+    console.log("wished", wished);
+    console.log("\n")*/
     
     const url = '/product/' + _id;
-    const [isWished, setIsWished] = useState(false);
+    const [isWished,setIsWished] = useState(wished);
     
     function addToWishlist(ev) {
         ev.preventDefault();
         ev.stopPropagation();
-        setIsWished(prev => !prev);
+        
+        const nextValue = !isWished;
+        
+        axios.post('/api/wishlist', {
+            product: _id,
+        }).then(() => {})
+        
+        setIsWished(nextValue);
     }
     
     
