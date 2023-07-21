@@ -10,6 +10,7 @@ import Input from "../components/Input";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Spinner from "../components/Spinner";
+import ProductBox from "../components/ProductBox";
 
 const ColsWrapper = styled.div`
     display: grid;
@@ -30,6 +31,8 @@ export default function AccountPage() {
     const [streetAddress, setStreetAddress] = useState("");
     const [country, setCountry] = useState("");
     const [loaded, setLoaded] = useState(false);
+    
+    const [wishedProducts, setWishedProducts] = useState([]);
     
     const CityHolder = styled.div`
         display: flex;
@@ -60,6 +63,12 @@ export default function AccountPage() {
             setCountry(response.data?.country);
             setLoaded(true);
         });
+        
+        axios.get('/api/wishlist').then((response) => {
+            // console.log(response.data);
+            setWishedProducts(response.data.map(wp => wp.product));
+        })
+        
     }, []);
     return (
         <>
@@ -69,6 +78,9 @@ export default function AccountPage() {
                     <RevealWrapper delay={0}>
                         <WhiteBox>
                             <h2>Wishlist</h2>
+                            {wishedProducts.length > 0 && wishedProducts.map(wp => (
+                                <ProductBox {...wp} wished={true} />
+                            ))}
                         </WhiteBox>
                     </RevealWrapper>
                     <RevealWrapper delay={100}>
