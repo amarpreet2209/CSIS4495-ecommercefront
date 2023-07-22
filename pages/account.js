@@ -30,7 +30,8 @@ export default function AccountPage() {
     const [postalCode, setPostalCode] = useState("");
     const [streetAddress, setStreetAddress] = useState("");
     const [country, setCountry] = useState("");
-    const [loaded, setLoaded] = useState(false);
+    const [addressLoaded, setAddressLoaded] = useState(false);
+    const [wishlistLoaded, setWishlistLoaded] = useState(false);
     
     const [wishedProducts, setWishedProducts] = useState([]);
     
@@ -61,15 +62,23 @@ export default function AccountPage() {
             setPostalCode(response.data?.postalCode);
             setStreetAddress(response.data?.streetAddress);
             setCountry(response.data?.country);
-            setLoaded(true);
+            setAddressLoaded(true);
         });
         
         axios.get('/api/wishlist').then((response) => {
             // console.log(response.data);
             setWishedProducts(response.data.map(wp => wp.product));
+            setWishlistLoaded(true);
         })
         
     }, []);
+    
+    const WishedProductsGrid = styled.div`
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px
+    `;
+    
     return (
         <>
             <Header/>
@@ -78,18 +87,26 @@ export default function AccountPage() {
                     <RevealWrapper delay={0}>
                         <WhiteBox>
                             <h2>Wishlist</h2>
-                            {wishedProducts.length > 0 && wishedProducts.map(wp => (
-                                <ProductBox {...wp} wished={true} />
-                            ))}
+                            {!wishlistLoaded && (
+                                <Spinner fullWidth={true}/>
+                            )}
+                            {wishlistLoaded && (
+                                <WishedProductsGrid>
+                                    {wishedProducts.length > 0 && wishedProducts.map(wp => (
+                                        <ProductBox {...wp} wished={true} />
+                                    ))}
+                                </WishedProductsGrid>
+                            )}
+                            
                         </WhiteBox>
                     </RevealWrapper>
                     <RevealWrapper delay={100}>
                         <WhiteBox>
                             <h2>Account Details</h2>
-                            {!loaded && (
+                            {!addressLoaded && (
                                 <Spinner fullWidth={true}/>
                             )}
-                            {loaded && (
+                            {addressLoaded && (
                                 <>
                                     <Input
                                         type="text"
