@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import {useContext, useEffect, useRef, useState} from "react";
-import {CartContext} from "./CartContext";
 import {ButtonStyle} from "./Button";
 import {primary} from "../lib/colors";
+import {CartContext} from "./CartContext";
 
 const FlyingButtonWrapper = styled.div`
   button{
@@ -47,14 +47,15 @@ export default function FlyingButton(props) {
     const {addProduct} = useContext(CartContext);
     const imgRef = useRef();
     function sendImageToCart(ev) {
-        if (imgRef?.current && imgRef?.current?.style) {
+        if (imgRef?.current?.style) {
             imgRef.current.style.display = 'inline-block';
-            imgRef.current.style.left = (ev.clientX - 50) + 'px';
-            imgRef.current.style.top = (ev.clientY - 50) + 'px';
+            imgRef.current.style.left = (ev.clientX-50) + 'px';
+            imgRef.current.style.top = (ev.clientY-50) + 'px';
             setTimeout(() => {
                 imgRef.current.style.display = 'none';
             }, 1000);
         }
+        
     }
     useEffect(() => {
         const interval = setInterval(() => {

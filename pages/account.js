@@ -40,6 +40,9 @@ export default function AccountPage() {
     
     const [wishedProducts, setWishedProducts] = useState([]);
     
+    const [orders, setOrders] = useState([]);
+    const [orderLoaded, setOrderLoaded] = useState(true);
+    
     const CityHolder = styled.div`
         display: flex;
         gap: 5px;
@@ -65,6 +68,8 @@ export default function AccountPage() {
         }
         setAddressLoaded(false);
         setWishlistLoaded(false);
+        setOrderLoaded(false);
+        
         axios.get('/api/address').then((response) => {
             setName(response.data?.name);
             setEmail(response.data?.email);
@@ -79,6 +84,10 @@ export default function AccountPage() {
             // console.log(response.data);
             setWishedProducts(response.data.map(wp => wp.product));
             setWishlistLoaded(true);
+        })
+        axios.get('/api/orders').then((response) => {
+            setOrders(response.data);
+            setOrderLoaded(true);
         })
         
     }, [session]);
@@ -105,6 +114,19 @@ export default function AccountPage() {
                             <Tabs
                                 tabs={['Orders', 'Wishlist']}
                                 active={activeTab} onChange={setActiveTab}/>
+                            
+                            {activeTab === 'Orders' && (
+                                <>
+                                    {!orderLoaded && (
+                                        <Spinner fullWidth={true} />
+                                    )}
+                                    {orderLoaded && (
+                                        <div>
+                                            {orders.length}
+                                        </div>
+                                    )}
+                                </>
+                            )}
                             
                             {activeTab === 'Wishlist' && (
                                 <>
