@@ -17,6 +17,9 @@ const ColsWrapper = styled.div`
     grid-template-columns: 1.2fr 0.8fr;
     gap: 40px;
     margin: 40px 0;
+    p {
+      margin: 5px;
+    }
 `;
 
 export default function AccountPage() {
@@ -30,8 +33,8 @@ export default function AccountPage() {
     const [postalCode, setPostalCode] = useState("");
     const [streetAddress, setStreetAddress] = useState("");
     const [country, setCountry] = useState("");
-    const [addressLoaded, setAddressLoaded] = useState(false);
-    const [wishlistLoaded, setWishlistLoaded] = useState(false);
+    const [addressLoaded, setAddressLoaded] = useState(true);
+    const [wishlistLoaded, setWishlistLoaded] = useState(true);
     
     const [wishedProducts, setWishedProducts] = useState([]);
     
@@ -55,6 +58,11 @@ export default function AccountPage() {
     }
     
     useEffect(() => {
+        if(!session) {
+            return;
+        }
+        setAddressLoaded(false);
+        setWishlistLoaded(false);
         axios.get('/api/address').then((response) => {
             setName(response.data?.name);
             setEmail(response.data?.email);
@@ -71,13 +79,19 @@ export default function AccountPage() {
             setWishlistLoaded(true);
         })
         
-    }, []);
+    }, [session]);
     
     const WishedProductsGrid = styled.div`
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 40px
     `;
+    
+    function productRemovedFromWishlist(idToRemove) {
+        setWishedProducts(products => {
+            return [...products.filter(p => p.id.toString() !== idToRemove)]
+        })
+    }
     
     return (
         <>
@@ -91,22 +105,38 @@ export default function AccountPage() {
                                 <Spinner fullWidth={true}/>
                             )}
                             {wishlistLoaded && (
-                                <WishedProductsGrid>
-                                    {wishedProducts.length > 0 && wishedProducts.map(wp => (
-                                        <ProductBox {...wp} wished={true} />
-                                    ))}
-                                </WishedProductsGrid>
+                                <>
+                                    <WishedProductsGrid>
+                                        {wishedProducts.length > 0 && wishedProducts.map(wp => (
+                                            <ProductBox key={wp._id} {...wp} wished={true}
+                                                        onRemoveFromWishlist={productRemovedFromWishlist}
+                                            />
+                                        ))}
+                                    </WishedProductsGrid>
+                                    
+                                    {wishedProducts.length === 0 && (
+                                        <>
+                                            {session && (
+                                                <p>Your wishlist is empty</p>
+                                            )}
+                                            {!session && (
+                                                <p>Login to add products to your wishlist</p>
+                                            )}
+                                        </>
+                                    )}
+                                </>
+                                
                             )}
                             
                         </WhiteBox>
                     </RevealWrapper>
                     <RevealWrapper delay={100}>
                         <WhiteBox>
-                            <h2>Account Details</h2>
+                            <h2>{session ? 'Account Details': 'Login'}</h2>
                             {!addressLoaded && (
                                 <Spinner fullWidth={true}/>
                             )}
-                            {addressLoaded && (
+                            {addressLoaded && session && (
                                 <>
                                     <Input
                                         type="text"
@@ -164,7 +194,7 @@ export default function AccountPage() {
                                 <Button primary onClick={logout}>Logout</Button>
                             )}
                             {!session && (
-                                <Button primary onClick={login}>Login</Button>
+                                <Button primary onClick={login}>Login with Google</Button>
                             )}
                         </WhiteBox>
                     </RevealWrapper>

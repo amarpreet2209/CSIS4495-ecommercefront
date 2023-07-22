@@ -27,12 +27,12 @@ export async function getServerSideProps(context) {
     const products =  await Product.find({}, null, {sort: {'_id': -1}})
     
     // getting current user info from ServerSession
-    const {user} = await getServerSession(context.req, context.res, authOptions);
+    const session = await getServerSession(context.req, context.res, authOptions);
     
-    const wishedProducts = await WishedProduct.find({
-        userEmail: user.email,
+    const wishedProducts = session?.user ? await WishedProduct.find({
+        userEmail: session?.user.email,
         product: products.map(p => p._id.toString())
-    })
+    }) : [];
     
     return {
         props: {
