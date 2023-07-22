@@ -11,6 +11,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Spinner from "../components/Spinner";
 import ProductBox from "../components/ProductBox";
+import Tabs from "../components/Tabs";
 
 const ColsWrapper = styled.div`
     display: grid;
@@ -35,6 +36,7 @@ export default function AccountPage() {
     const [country, setCountry] = useState("");
     const [addressLoaded, setAddressLoaded] = useState(true);
     const [wishlistLoaded, setWishlistLoaded] = useState(true);
+    const [activeTab, setActiveTab] = useState('Orders');
     
     const [wishedProducts, setWishedProducts] = useState([]);
     
@@ -100,33 +102,44 @@ export default function AccountPage() {
                 <ColsWrapper>
                     <RevealWrapper delay={0}>
                         <WhiteBox>
-                            <h2>Wishlist</h2>
-                            {!wishlistLoaded && (
-                                <Spinner fullWidth={true}/>
-                            )}
-                            {wishlistLoaded && (
+                            <Tabs
+                                tabs={['Orders', 'Wishlist']}
+                                active={activeTab} onChange={setActiveTab}/>
+                            
+                            {activeTab === 'Wishlist' && (
                                 <>
-                                    <WishedProductsGrid>
-                                        {wishedProducts.length > 0 && wishedProducts.map(wp => (
-                                            <ProductBox key={wp._id} {...wp} wished={true}
-                                                        onRemoveFromWishlist={productRemovedFromWishlist}
-                                            />
-                                        ))}
-                                    </WishedProductsGrid>
-                                    
-                                    {wishedProducts.length === 0 && (
+                                    {!wishlistLoaded && (
+                                        <Spinner fullWidth={true}/>
+                                    )}
+                                    {wishlistLoaded && (
                                         <>
-                                            {session && (
-                                                <p>Your wishlist is empty</p>
-                                            )}
-                                            {!session && (
-                                                <p>Login to add products to your wishlist</p>
+                                            <WishedProductsGrid>
+                                                {wishedProducts.length > 0 && wishedProducts.map(wp => (
+                                                    <ProductBox key={wp._id} {...wp} wished={true}
+                                                                onRemoveFromWishlist={productRemovedFromWishlist}
+                                                    />
+                                                ))}
+                                            </WishedProductsGrid>
+                                            
+                                            {wishedProducts.length === 0 && (
+                                                <>
+                                                    {session && (
+                                                        <p>Your wishlist is empty</p>
+                                                    )}
+                                                    {!session && (
+                                                        <p>Login to add products to your wishlist</p>
+                                                    )}
+                                                </>
                                             )}
                                         </>
+                                    
                                     )}
                                 </>
-                                
                             )}
+                            
+                            
+                            
+                            
                             
                         </WhiteBox>
                     </RevealWrapper>
