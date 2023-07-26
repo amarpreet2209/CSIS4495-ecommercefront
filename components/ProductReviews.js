@@ -5,6 +5,7 @@ import StarsRating from "./StarsRating";
 import Textarea from "./Textarea";
 import Button from "./Button";
 import {useState} from "react";
+import axios from "axios";
 
 const Title = styled.h2`
     font-size: 1.2rem;
@@ -25,9 +26,13 @@ const ColsWrapper = styled.div`
 export default function ProductReviews({product}) {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+    const [stars, setStars] = useState(0)
     
     function submitReview() {
-        
+        const data = {title,description, product: product._id}
+        axios.post('/api/reviews', data).then(res => {
+            alert('ok')
+        })
     }
     
     return (
