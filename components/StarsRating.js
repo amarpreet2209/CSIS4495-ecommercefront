@@ -2,6 +2,7 @@ import StarOutline from "./icons/StarOutline";
 import styled from "styled-components";
 import {useState} from "react";
 import StarSolid from "./icons/StarSolid";
+import {primary} from "../lib/colors";
 
 const StarsWrapper = styled.div`
     display: inline-flex;
@@ -18,14 +19,16 @@ const StarWrapper = styled.button`
   border: 0;
   display: inline-block;
   background-color: transparent;
+  color: ${primary};
 `;
 
-export default function StarsRating() {
-    const [howMany, setHowMany] = useState(0);
+export default function StarsRating({defaultHowMany=0, onChange=() => {}}) {
+    const [howMany, setHowMany] = useState(defaultHowMany);
     const five = [1,2,3,4,5];
     
     function handleStarClick(n) {
         setHowMany(n);
+        onChange(n);
     }
     
     
