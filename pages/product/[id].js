@@ -6,11 +6,9 @@ import {Product} from "../../models/Product";
 import styled from "styled-components";
 import WhiteBox from "../../components/WhiteBox";
 import ProductImages from "../../components/ProductImages";
-import Button from "../../components/Button";
 import CartIcon from "../../components/icons/Cart";
-import {useContext} from "react";
-import {CartContext} from "../../components/CartContext";
 import FlyingButton from "../../components/FlyingButton";
+import ProductReviews from "../../components/ProductReviews";
 
 const ColWrapper = styled.div`
     display: grid;
@@ -35,7 +33,6 @@ const Price = styled.span`
 `;
 
 export default function ProductPage({product}) {
-    const {addProduct} = useContext(CartContext);
     return (
         <>
             <Header/>
@@ -60,6 +57,7 @@ export default function ProductPage({product}) {
                     </div>
                     
                 </ColWrapper>
+                <ProductReviews product={product}/>
                
             </Center>
         </>
