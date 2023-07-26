@@ -7,6 +7,7 @@ import NewProducts from "../components/NewProducts";
 import {WishedProduct} from "../models/WishedProduct";
 import {getServerSession} from "next-auth";
 import {authOptions} from "./api/auth/[...nextauth]";
+import {Setting} from "../models/Setting";
 
 
 export default function Home({featuredProduct, newProducts, wishedNewProducts}) {
@@ -24,8 +25,9 @@ export default function Home({featuredProduct, newProducts, wishedNewProducts}) 
 * fetching data on the server side before rendering page.
 * */
 export async function getServerSideProps(context) {
-    const featuredProductId = '6483b0b5e8298969cd29ba55';
     await mongooseConnect();
+    const featuredProductSetting = await Setting.findOne({name: 'featuredProductId'})
+    const featuredProductId = featuredProductSetting.value;
     const featuredProduct = await Product.findById(featuredProductId);
     const newProducts = await Product.find({}, null,
         {sort: {'_id':-1}, limit: 10}
