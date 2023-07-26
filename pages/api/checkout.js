@@ -5,6 +5,7 @@ import Stripe from 'stripe';
 import {getServerSession} from "next-auth";
 import {request} from "axios";
 import {authOptions} from "./auth/[...nextauth]";
+import {Setting} from "../../models/Setting";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -46,6 +47,8 @@ export default async function handler(req, res) {
         userEmail: session?.user?.email
     });
     
+    const shippingFeeSetting = await Setting.findOne({name: 'shippingFee'})
+    const shippingFeeCents = parseInt(shippingFeeSetting.value || '0') * 100;
     
     // Stripe session create
     const stripeSession = await stripe.checkout.sessions.create({
@@ -54,7 +57,16 @@ export default async function handler(req, res) {
         customer_email: email,
         success_url: process.env.PUBLIC_URL + '/cart?success=1',
         cancel_url: process.env.PUBLIC_URL + '/cart?canceled=1',
-        metadata: {orderId: orderDoc._id.toString()}
+        metadata: {orderId: orderDoc._id.toString()},
+        shipping_options: [
+            {
+                shipping_rate_data: {
+                    display_name: 'Shipping Fee',
+                    type: 'fixed_amount',
+                    fixed_amount: {amount: shippingFeeCents, currency: 'CAD'}
+                }
+            }
+        ]
     });
     
     res.json({
