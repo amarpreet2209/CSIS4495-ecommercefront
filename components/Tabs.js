@@ -22,6 +22,7 @@ export default function Tabs({tabs, active, onChange}) {
         <StyledTabs>
             {tabs.map(tabname => (
                 <StyledTab
+                    key={tabname}
                     onClick={() => {onChange(tabname)}}
                     active={tabname===active}>{tabname}</StyledTab>
             ))}
