@@ -22,11 +22,16 @@ const StarWrapper = styled.button`
   color: ${primary};
 `;
 
-export default function StarsRating({defaultHowMany=0, onChange=() => {}}) {
+export default function StarsRating({defaultHowMany=0,disabled, onChange=() => {}}) {
     const [howMany, setHowMany] = useState(defaultHowMany);
     const five = [1,2,3,4,5];
     
     function handleStarClick(n) {
+        
+        if (disabled) {
+            return;
+        }
+        
         setHowMany(n);
         onChange(n);
     }
