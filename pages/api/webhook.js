@@ -4,7 +4,7 @@ import {buffer} from "micro";
 import {Order} from "../../models/Order";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const endpointSecret = "whsec_df6ad88cf96693ca78b9afa15f5ab01e39bc011631c0a82dcee35ab247820b1d";
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 export default async function handler (req, res) {
     await mongooseConnect();
